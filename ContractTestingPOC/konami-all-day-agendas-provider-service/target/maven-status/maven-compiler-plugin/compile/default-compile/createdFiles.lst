@@ -1,0 +1,8 @@
+provider\AgendasDataSource.class
+provider\AgendaUtils.class
+provider\KonamiAgendaController.class
+provider\Agenda.class
+provider\BetReport.class
+provider\KonamiAgendaProviderLauncher.class
+provider\KonamiAgendaService.class
+provider\AgendaList.class

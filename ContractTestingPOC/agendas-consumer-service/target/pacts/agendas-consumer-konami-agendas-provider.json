@@ -1,0 +1,239 @@
+{
+  "provider": {
+    "name": "konami-agendas-provider"
+  },
+  "consumer": {
+    "name": "agendas-consumer"
+  },
+  "interactions": [
+    {
+      "description": "get all agendas",
+      "request": {
+        "method": "GET",
+        "path": "/agendas"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "agendas": [
+            {
+              "date": "01/01/2022",
+              "sprintId": 105,
+              "ceremonies": {
+                "planning": "10:30",
+                "lunch": "12:00",
+                "retrospective": "14:00",
+                "sharingsessions": "15:30",
+                "refinement": "09:30"
+              }
+            },
+            {
+              "date": "01/01/2022",
+              "sprintId": 105,
+              "ceremonies": {
+                "planning": "10:30",
+                "lunch": "12:00",
+                "retrospective": "14:00",
+                "sharingsessions": "15:30",
+                "refinement": "09:30"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.agendas": {
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 2
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.agendas[*].sprintId": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.agendas[*].date": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.agendas[*].ceremonies.refinement": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.agendas[*].ceremonies.planning": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.agendas[*].ceremonies.lunch": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.agendas[*].ceremonies.retrospective": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.agendas[*].ceremonies.sharingsessions": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "a list of existing agendas"
+        }
+      ]
+    },
+    {
+      "description": "a request to retrieve an agenda",
+      "request": {
+        "method": "GET",
+        "path": "/agendas/sprint/105",
+        "generators": {
+          "path": {
+            "type": "ProviderState",
+            "expression": "/agendas/sprint/${id}",
+            "dataType": "STRING"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "date": "01/01/2022",
+          "sprintId": 105,
+          "ceremonies": {
+            "planning": "10:30",
+            "jogatinas": "17:00",
+            "retrospective": "14:00",
+            "sharingsessions": "15:30",
+            "refinement": "09:30"
+          }
+        },
+        "matchingRules": {
+          "body": {
+            "$.sprintId": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.date": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.ceremonies.refinement": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.ceremonies.planning": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.ceremonies.retrospective": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.ceremonies.sharingsessions": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.ceremonies.jogatinas": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "exists an Agenda for a given sprint"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.10"
+    }
+  }
+}

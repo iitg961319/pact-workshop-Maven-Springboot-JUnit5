@@ -1,0 +1,126 @@
+{
+  "provider": {
+    "name": "fixed-odds-bet-reporting"
+  },
+  "consumer": {
+    "name": "agendas-consumer"
+  },
+  "interactions": [
+    {
+      "description": "a search bets for that account",
+      "request": {
+        "method": "GET",
+        "path": "/api/FixedOddsBetReporting/v1.0/searchBets",
+        "query": {
+          "sortDir": [
+            "DESC"
+          ]
+        },
+        "matchingRules": {
+          "query": {
+            "sortDir": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "DESC"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        "body": {
+          "accountId": 324,
+          "moreAvailable": false,
+          "localeCode": "en",
+          "bets": [],
+          "currencyCode": "GBP",
+          "numberOfMatches": 0
+        },
+        "matchingRules": {
+          "header": {
+            "Content-Type": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json;charset=utf-8"
+                }
+              ],
+              "combine": "AND"
+            }
+          },
+          "body": {
+            "$.bets": {
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 0
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.accountId": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.currencyCode": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.localeCode": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.numberOfMatches": {
+              "matchers": [
+                {
+                  "match": "number"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.moreAvailable": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "exists an account without bets"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.10"
+    }
+  }
+}
